@@ -60,6 +60,10 @@ BANNED_WORDS = [
     "testament", "underscore", "it's worth noting", "it is worth noting", "it's important to note",
     "in today's world", "in the age of", "at the end of the day", "let's dive in",
     "in conclusion", "this changes everything", "stands as", "plays a vital role", "plays a crucial role",
+    "this is huge", "serves as", "experts say", "experts agree", "studies show", "many argue",
+    "widely regarded", "what most people", "here's the thing", "here's what", "let me be clear",
+    "the key point", "marks a milestone", "major step forward", "interestingly", "overall,",
+    "in short,", "ultimately,",
 ]
 
 SYSTEM_PROMPT = """You are the editor of "AI for Research", a weekly digest for scientists, PhD students, research managers and grant writers, mostly in Europe. Readers are busy and sceptical. They want to know which AI developments change how they do research, find literature, analyse data, write papers or apply for funding.
@@ -83,8 +87,16 @@ Write like a sharp human science journalist, in British English. Follow these ru
 - No binary contrasts ("This is not X, it's Y"), no rhetorical questions, no colon reveals ("The best part: ..."), no hype, no exclamation marks, no emoji.
 - Do not use em dashes. Use commas, full stops or parentheses.
 - No "-ing" tails that pretend to add meaning ("..., highlighting the importance of ...").
-- Do not tell the reader what to think ("This is important", "Interestingly"). Show the fact.
-- The takeaway is one or two plain sentences with a practical suggestion for the coming week. No recap, no aphorism.
+- Do not tell the reader what to think ("This is important", "Interestingly", "The key point is", "This matters because"). Show the fact.
+- No faux-insight setups ("What most people miss", "Here's what nobody tells you") and no throat-clearing ("Here's the thing", "Let me be clear").
+- No weasel attribution ("experts say", "studies show", "many argue", "widely regarded"). Name the source from the item, or drop the claim.
+- No importance puffery ("marks a milestone", "a major step forward", "solidifies its position"). State what happened.
+- Prefer "is" and "has" over "serves as", "stands as", "represents".
+- Repeat the clear word instead of rotating synonyms (if it is "the model", keep calling it "the model").
+- Cut empty adverbs: just, simply, actually, truly, fundamentally, importantly, crucially, inevitably.
+- No dramatic fragments ("And it works. Fast.") and no stacks of identical sentence shapes. Write complete sentences.
+- Use bold only for the fixed "Why it matters" label. No bullet lists inside summaries.
+- The takeaway is one or two plain sentences with a practical suggestion for the coming week. No recap, no "In short" or "Overall", no aphorism or clever closing line.
 
 ## Fields
 - title: a specific headline for the issue that names the one or two biggest stories, max 70 characters. No "Issue", no date, no colon at the start.
@@ -282,7 +294,11 @@ def style_problems(issue: Issue) -> list[str]:
         + [f"{s.headline} {s.summary} {s.why_it_matters}" for s in issue.top_stories]
         + [q.text for q in issue.quick_hits]
     ).lower()
-    found = [w for w in BANNED_WORDS if re.search(rf"\b{re.escape(w)}\w*\b", blob)]
+    def banned_pattern(w: str) -> str:
+        tail = r"\w*\b" if w[-1].isalnum() else ""
+        return rf"\b{re.escape(w)}{tail}"
+
+    found = [w for w in BANNED_WORDS if re.search(banned_pattern(w), blob)]
     problems = [f"banned word or phrase used: '{w}'" for w in found]
     if re.search(r"\b(?:is|was|isn't|wasn't) not (?:just|only|merely)\b", blob) or re.search(r"\bnot just\b.*\bbut\b", blob):
         problems.append("binary contrast ('not just X but Y') used")
