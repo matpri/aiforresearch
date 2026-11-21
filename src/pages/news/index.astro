@@ -1,0 +1,68 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../../components/PageHero.astro';
+import NewsCard from '../../components/NewsCard.astro';
+import Icon from '../../components/Icon.astro';
+import { getSortedNews } from '../../lib/format';
+import { abs, breadcrumbs, graph, organizationId } from '../../lib/schema';
+import { FEED_COUNT } from '../../lib/sources';
+
+const posts = await getSortedNews();
+const crumbs = [
+  { name: 'Home', path: '/' },
+  { name: 'Weekly AI News', path: '/news/' },
+];
+const schema = graph(
+  {
+    '@type': 'CollectionPage',
+    '@id': abs('/news/'),
+    url: abs('/news/'),
+    name: 'Weekly AI News for researchers',
+    description: 'Every issue of the AI for Research weekly digest.',
+    isPartOf: { '@id': abs('/#website') },
+    publisher: { '@id': organizationId },
+    mainEntity: {
+      '@type': 'ItemList',
+      itemListElement: posts.map((p, i) => ({
+        '@type': 'ListItem',
+        position: i + 1,
+        url: abs(`/news/${p.id}/`),
+        name: p.data.title,
+      })),
+    },
+  },
+  breadcrumbs(crumbs),
+);
+---
+<BaseLayout
+  title="Weekly AI News for researchers"
+  description="Every Monday: the AI models, research tools, papers and EU policy updates that matter for scientists, summarised with links to the original sources."
+  schema={schema}
+>
+  <PageHero
+    eyebrow="Weekly AI News"
+    title="AI news for people who do research"
+    lead={`One issue every Monday, built from ${FEED_COUNT} public sources. Each story says what happened and what it means for your work, with a link to the original.`}
+    crumbs={crumbs}
+  >
+    <div class="hero__actions">
+      <a class="btn btn--ghost" href="/rss.xml"><Icon name="rss" /> RSS feed</a>
+      <a class="btn btn--ghost" href="/ai-transparency/"><Icon name="info" /> How it's made</a>
+    </div>
+  </PageHero>
+
+  <section class="section section--tight">
+    <div class="container">
+      {posts.length > 0 ? (
+        <div class="news-grid reveal-stagger" data-reveal>
+          {posts.map((post) => <NewsCard post={post} headingLevel="h2" />)}
+        </div>
+      ) : (
+        <div class="empty-state">
+          <h2>The first issue arrives on Monday</h2>
+          <p>New issues go live every Monday morning (CET). Follow the RSS feed to see them first.</p>
+        </div>
+      )}
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,19 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Icon from '../../components/Icon.astro';
+---
+<BaseLayout title="Message sent" description="Thank you for your message." noindex>
+  <section class="section">
+    <div class="container--narrow">
+      <div class="empty-state">
+        <div class="card__icon thanks-icon"><Icon name="check" /></div>
+        <h1>Thanks, your message is on its way</h1>
+        <p>You should get a reply within a few working days. In the meantime, the latest issue of the digest is waiting.</p>
+        <div class="hero__actions thanks-actions">
+          <a class="btn btn--primary" href="/news/">Read the digest <Icon name="arrow" /></a>
+          <a class="btn btn--ghost" href="/">Back to home</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

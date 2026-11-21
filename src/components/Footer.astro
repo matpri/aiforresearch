@@ -1,0 +1,43 @@
+---
+import Logo from './Logo.astro';
+import { SITE } from '../config';
+const year = new Date().getFullYear();
+---
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <Logo title="AI for Research" />
+        <p>A weekly round-up of the AI news that affects how research gets done, plus support for research proposals (coming soon).</p>
+      </div>
+      <div>
+        <h2>Read</h2>
+        <ul>
+          <li><a href="/news/">Weekly AI News</a></li>
+          <li><a href="/rss.xml">RSS feed</a></li>
+          <li><a href="/ai-transparency/">How the digest is made</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2>Site</h2>
+        <ul>
+          <li><a href="/services/">Services</a></li>
+          <li><a href="/about/">About</a></li>
+          <li><a href="/contact/">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2>Legal</h2>
+        <ul>
+          <li><a href="/privacy/">Privacy policy</a></li>
+          <li><a href="/legal-notice/">Legal notice</a></li>
+          <li><a href="/ai-transparency/">AI transparency</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© {year} {SITE.owner.name} · {SITE.name} · {SITE.owner.city}, {SITE.owner.country}</span>
+      <span>No cookies, no ad trackers · <a href={`mailto:${SITE.email}`}>{SITE.email}</a></span>
+    </div>
+  </div>
+</footer>

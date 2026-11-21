@@ -1,0 +1,78 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import Icon from '../components/Icon.astro';
+import { SITE } from '../config';
+import { abs, breadcrumbs, graph, organization, person, personId } from '../lib/schema';
+
+const crumbs = [
+  { name: 'Home', path: '/' },
+  { name: 'About', path: '/about/' },
+];
+const schema = graph(
+  organization,
+  person,
+  {
+    '@type': 'AboutPage',
+    '@id': abs('/about/'),
+    url: abs('/about/'),
+    name: 'About AI for Research',
+    about: { '@id': personId },
+    isPartOf: { '@id': abs('/#website') },
+  },
+  breadcrumbs(crumbs),
+);
+---
+<BaseLayout
+  title="About AI for Research and Matteo Prina"
+  description="AI for Research is run by Matteo Prina, a senior researcher in energy modelling and artificial intelligence based in Milan, Italy."
+  schema={schema}
+>
+  <PageHero
+    eyebrow="About"
+    title="Who runs AI for Research"
+    lead="A weekly AI digest and, soon, proposal support, run by a researcher working in energy modelling and artificial intelligence."
+    crumbs={crumbs}
+  />
+
+  <section class="section section--tight">
+    <div class="container about-grid">
+      <aside class="about-card reveal">
+        <div class="avatar" aria-hidden="true">MP</div>
+        <h2>{SITE.owner.name}</h2>
+        <p>{SITE.owner.jobTitle}</p>
+        <p>{SITE.owner.city}, {SITE.owner.country}</p>
+        <p><a class="btn btn--ghost" href={SITE.owner.url} rel="me noopener">matteoprina.com <Icon name="arrow" /></a></p>
+      </aside>
+
+      <div class="prose reveal">
+        <p>
+          AI for Research is run by <strong>{SITE.owner.name}</strong>, a senior researcher working on energy system modelling and artificial intelligence. More about Matteo's research is on <a href={SITE.owner.url} rel="me noopener">matteoprina.com</a>.
+        </p>
+
+        <h2>What the site does</h2>
+        <p>
+          New AI models, research agents and EU rules appear every week, and most of the coverage is written for developers or investors. AI for Research filters that flow for people who write papers, run experiments and apply for grants.
+        </p>
+        <p>
+          The <a href="/news/">weekly digest</a> comes out every Monday. Each story links to its original source and says in a sentence or two why a researcher might care.
+        </p>
+
+        <h2>How the digest is written</h2>
+        <p>
+          The digest is produced by an automated pipeline that Matteo designed. A script collects items from a fixed list of public sources, Claude Haiku (a model by Anthropic) selects and summarises them, and the script checks that every link comes from those sources. Issues are published without human review and are labelled as AI-generated. The <a href="/ai-transparency/">AI transparency page</a> explains each step and lists the sources.
+        </p>
+
+        <h2>What comes next</h2>
+        <p>
+          Support for research proposals is in preparation: call analysis, first drafts and reviews of existing drafts. The <a href="/services/">services page</a> describes them. They are not on sale yet.
+        </p>
+
+        <h2>Get in touch</h2>
+        <p>
+          Spotted an error in an issue, want to suggest a source, or interested in the services? Write to <a href={`mailto:${SITE.email}`}>{SITE.email}</a> or use the <a href="/contact/">contact page</a>.
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

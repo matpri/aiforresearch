@@ -1,0 +1,116 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import Icon from '../components/Icon.astro';
+import { abs, breadcrumbs, graph, organization, organizationId } from '../lib/schema';
+
+const services = [
+  {
+    id: 'call-analysis',
+    icon: 'search' as const,
+    name: 'Preliminary call analysis',
+    lead: 'Before you spend weeks on a proposal, find out what the call asks for and whether your idea fits it.',
+    items: [
+      'A plain-language reading of the call: scope, expected outcomes, budget and deadlines',
+      'A fit check between the call and your project idea',
+      'The points evaluators are likely to look for',
+      'Projects already funded on the same topic',
+      'A clear go or no-go recommendation',
+    ],
+  },
+  {
+    id: 'first-draft',
+    icon: 'pen' as const,
+    name: 'First draft of the proposal',
+    lead: 'A structured first draft of the main sections, built from your idea, your team and the call text.',
+    items: [
+      'Outline of Excellence, Impact and Implementation',
+      'Objectives, work packages and deliverables',
+      'Editable draft text for each section',
+      'A list of open questions for your consortium',
+    ],
+  },
+  {
+    id: 'draft-review',
+    icon: 'check' as const,
+    name: 'Review of an existing draft',
+    lead: 'An evaluator-style read of the draft you already have, with scores and a list of fixes.',
+    items: [
+      'Scores against the official award criteria',
+      'Weak points, section by section',
+      'Fixes ranked by how many points they could win back',
+      'A consistency check across the proposal',
+    ],
+  },
+];
+
+const crumbs = [
+  { name: 'Home', path: '/' },
+  { name: 'Services', path: '/services/' },
+];
+
+const schema = graph(
+  organization,
+  ...services.map((s) => ({
+    '@type': 'Service',
+    '@id': abs(`/services/#${s.id}`),
+    name: s.name,
+    description: s.lead,
+    serviceType: 'Research proposal support',
+    provider: { '@id': organizationId },
+    areaServed: { '@type': 'Place', name: 'European Union' },
+    audience: { '@type': 'Audience', audienceType: 'Researchers and research organisations' },
+  })),
+  breadcrumbs(crumbs),
+);
+---
+<BaseLayout
+  title="Research proposal services: call analysis, drafting and review"
+  description="Coming soon: preliminary analysis of a funding call, a first draft of your research proposal, and an evaluator-style review of an existing draft."
+  schema={schema}
+>
+  <PageHero
+    eyebrow="Services"
+    title="Support for research proposals"
+    lead="Three services for researchers applying to Horizon Europe and other competitive calls. They cannot be bought yet. You can register your interest today."
+    crumbs={crumbs}
+  >
+    <div class="hero__actions">
+      <span class="badge badge--muted">Coming soon</span>
+    </div>
+  </PageHero>
+
+  <section class="section section--tight">
+    <div class="container">
+      <div class="cards reveal-stagger" data-reveal>
+        {services.map((s) => (
+          <div class="card service-card" id={s.id}>
+            <div class="card__icon"><Icon name={s.icon} /></div>
+            <h2 class="service-card__title">{s.name}</h2>
+            <p>{s.lead}</p>
+            <ul>
+              {s.items.map((item) => <li><Icon name="check" />{item}</li>)}
+            </ul>
+            <div class="card__foot service-card__foot">
+              <span class="service-card__price">Price to be announced</span>
+            </div>
+            <button class="btn" type="button" disabled aria-disabled="true">Not available yet</button>
+            <a class="btn btn--ghost" href={`/contact/?topic=services&service=${s.id}`}>Register interest</a>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--tight">
+    <div class="container--narrow">
+      <div class="notice reveal">
+        <Icon name="info" />
+        <div>
+          <p><strong>Why can't I buy these yet?</strong> The legal and tax setup for selling services across the EU is still being finalised. Until it is done, nothing on this page is an offer, and registering interest creates no obligation for you.</p>
+          <p>If you register, you will get one email when the services open. Your details are used for nothing else; see the <a href="/privacy/">privacy policy</a>.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

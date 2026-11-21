@@ -1,0 +1,86 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import { SITE } from '../config';
+import { abs, breadcrumbs, graph, organizationId } from '../lib/schema';
+import { SOURCES, SOURCE_CATEGORIES, FEED_COUNT } from '../lib/sources';
+
+const crumbs = [
+  { name: 'Home', path: '/' },
+  { name: 'AI transparency', path: '/ai-transparency/' },
+];
+const schema = graph(
+  {
+    '@type': 'WebPage',
+    '@id': abs('/ai-transparency/'),
+    url: abs('/ai-transparency/'),
+    name: 'How the AI for Research digest is made',
+    publisher: { '@id': organizationId },
+  },
+  breadcrumbs(crumbs),
+);
+const displayUrl = (u: string) => {
+  const host = new URL(u).hostname.replace(/^www\./, '');
+  return host === 'news.google.com' ? 'Google News topic search' : host;
+};
+---
+<BaseLayout
+  title="AI transparency: how the weekly digest is made"
+  description={`The AI for Research digest is written by Claude Haiku from ${FEED_COUNT} public sources and published without human review. Here is how it works, which sources it reads and what can go wrong.`}
+  schema={schema}
+>
+  <PageHero
+    eyebrow="AI transparency"
+    title="How the weekly digest is made"
+    lead="The digest is written by an AI model and published automatically. This page explains the process, the sources and the limits, in line with the transparency rules of the EU AI Act (Art. 50)."
+    crumbs={crumbs}
+  />
+
+  <section class="section section--tight">
+    <div class="container--narrow prose">
+      <h2>In short</h2>
+      <ul>
+        <li><strong>Model:</strong> Claude Haiku 5.5, a small language model by Anthropic.</li>
+        <li><strong>Sources:</strong> {FEED_COUNT} public RSS feeds, listed below.</li>
+        <li><strong>Schedule:</strong> every Monday at about 07:00 CET, covering the previous seven days.</li>
+        <li><strong>Human review:</strong> none before publication. Corrections are made after a reader reports an error.</li>
+        <li><strong>Label:</strong> every issue carries an "AI-generated" notice at the top.</li>
+      </ul>
+
+      <h2>The process, step by step</h2>
+      <ol>
+        <li><strong>Collect.</strong> A script reads the feeds and keeps items published in the last seven days. It removes duplicates and anything already covered in an earlier issue. For general science feeds it keeps only items that mention AI.</li>
+        <li><strong>Number.</strong> Each remaining item gets an ID (S001, S002 and so on) with its title, short summary, source and date.</li>
+        <li><strong>Select and write.</strong> Claude Haiku receives the list and fixed editorial instructions. It picks 6 to 10 top stories and a few quick hits, and writes a headline, a short summary and a "why it matters for researchers" line for each. It may use only facts in the item's title and summary.</li>
+        <li><strong>Check.</strong> The model refers to items by ID only. The script inserts the links itself, so the model cannot invent a source or a URL. Issues with unknown IDs, repeated items or fewer than five valid stories are rejected. The text is also checked against a list of banned hype words and rewritten once if needed.</li>
+        <li><strong>Publish.</strong> The script saves the issue, the site is rebuilt, and the issue goes live.</li>
+      </ol>
+
+      <h2>What can go wrong</h2>
+      <p>
+        AI models make mistakes. A summary can misread a source, miss context that was not in the feed, or overstate what a study found. Feed summaries are short, so the model sometimes works from a headline and two sentences. Treat each story as a pointer to the original source, not as a substitute for it.
+      </p>
+      <p>
+        If you find an error, email <a href={`mailto:${SITE.email}`}>{SITE.email}</a> with the issue number. Corrected issues get a note at the end.
+      </p>
+
+      <h2>Who is responsible</h2>
+      <p>
+        The pipeline, the source list and the editorial instructions were designed by {SITE.owner.name}, who is responsible for the site. See the <a href="/about/">about page</a> and the <a href="/legal-notice/">legal notice</a>.
+      </p>
+
+      <h2>Sources</h2>
+      {SOURCE_CATEGORIES.map((cat) => (
+        <>
+          <h3>{cat}</h3>
+          <ul>
+            {SOURCES.filter((s) => s.category === cat).map((s) => (
+              <li>{s.name} <span class="muted">({displayUrl(s.url)})</span></li>
+            ))}
+          </ul>
+        </>
+      ))}
+      <p>Want a source added? <a href="/contact/?topic=source">Suggest one</a>.</p>
+    </div>
+  </section>
+</BaseLayout>

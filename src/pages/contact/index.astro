@@ -1,0 +1,105 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../../components/PageHero.astro';
+import Icon from '../../components/Icon.astro';
+import { SITE } from '../../config';
+import { abs, breadcrumbs, graph, organization } from '../../lib/schema';
+
+const crumbs = [
+  { name: 'Home', path: '/' },
+  { name: 'Contact', path: '/contact/' },
+];
+const schema = graph(
+  organization,
+  { '@type': 'ContactPage', '@id': abs('/contact/'), url: abs('/contact/'), name: 'Contact AI for Research' },
+  breadcrumbs(crumbs),
+);
+const hasForm = Boolean(SITE.web3formsKey);
+---
+<BaseLayout
+  title="Contact"
+  description="Questions, corrections, source suggestions or interest in the proposal services: contact AI for Research by email or through the form."
+  schema={schema}
+>
+  <PageHero
+    eyebrow="Contact"
+    title="Get in touch"
+    lead="Questions, corrections to an issue, a source we should follow, or interest in the services. Replies usually take a few working days."
+    crumbs={crumbs}
+  />
+
+  <section class="section section--tight">
+    <div class="container contact-grid">
+      <div class="reveal">
+        {hasForm ? (
+          <form class="form" action="https://api.web3forms.com/submit" method="POST" data-contact-form>
+            <input type="hidden" name="access_key" value={SITE.web3formsKey} />
+            <input type="hidden" name="subject" value="New message from aiforresearch.eu" data-subject />
+            <input type="hidden" name="from_name" value="aiforresearch.eu" />
+            <input type="hidden" name="redirect" value={`${SITE.url}/contact/thanks/`} />
+            <input type="checkbox" name="botcheck" class="hp-field" tabindex="-1" autocomplete="off" aria-hidden="true" />
+
+            <div class="form-row">
+              <div class="field">
+                <label for="name">Name</label>
+                <input id="name" name="name" type="text" autocomplete="name" required maxlength="120" />
+              </div>
+              <div class="field">
+                <label for="email">Email</label>
+                <input id="email" name="email" type="email" autocomplete="email" required maxlength="200" />
+              </div>
+            </div>
+            <div class="field">
+              <label for="topic">Topic</label>
+              <select id="topic" name="topic" data-topic>
+                <option value="general">General question</option>
+                <option value="correction">Correction to an issue</option>
+                <option value="source">Suggest a source</option>
+                <option value="services">Services: tell me when they open</option>
+                <option value="collaboration">Collaboration</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="message">Message</label>
+              <textarea id="message" name="message" required maxlength="5000"></textarea>
+            </div>
+            <label class="checkbox">
+              <input type="checkbox" name="privacy_consent" value="yes" required />
+              <span>I have read the <a href="/privacy/">privacy policy</a> and agree that my name, email and message are used to answer this request.</span>
+            </label>
+            <div>
+              <button class="btn btn--primary" type="submit">Send message <Icon name="arrow" /></button>
+            </div>
+            <p class="form-note">The form is delivered through Web3Forms, which forwards it to our inbox. Please don't send confidential proposal text through this form.</p>
+          </form>
+        ) : (
+          <div class="card">
+            <div class="card__icon"><Icon name="mail" /></div>
+            <h2>Write an email</h2>
+            <p>The quickest way to reach us is a direct email. Tell us what it's about in the subject line.</p>
+            <p><a class="btn btn--primary" href={`mailto:${SITE.email}`}>{SITE.email} <Icon name="arrow" /></a></p>
+          </div>
+        )}
+      </div>
+
+      <aside class="contact-aside reveal">
+        <div>
+          <h2>Email</h2>
+          <p><a href={`mailto:${SITE.email}`}>{SITE.email}</a></p>
+        </div>
+        <div>
+          <h2>Corrections</h2>
+          <p>If an issue gets a fact wrong, send the issue number and the line. Corrections are added to the article.</p>
+        </div>
+        <div>
+          <h2>Services</h2>
+          <p>The proposal services are not on sale yet. Pick "Services" as the topic and you will get one email when they open.</p>
+        </div>
+        <div>
+          <h2>Privacy</h2>
+          <p>Messages are kept only as long as needed to reply, then deleted within 24 months. <a href="/privacy/">Details</a>.</p>
+        </div>
+      </aside>
+    </div>
+  </section>
+</BaseLayout>

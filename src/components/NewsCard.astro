@@ -1,0 +1,26 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import Icon from './Icon.astro';
+import { formatDate } from '../lib/format';
+
+interface Props { post: CollectionEntry<'news'>; headingLevel?: 'h2' | 'h3' }
+const { post, headingLevel = 'h3' } = Astro.props;
+const { title, description, pubDate, issue, tags } = post.data;
+const Heading = headingLevel;
+---
+<a class="card news-card" href={`/news/${post.id}/`}>
+  <div class="news-card__meta">
+    <span class="badge">Issue #{issue}</span>
+    <time datetime={pubDate.toISOString()}>{formatDate(pubDate)}</time>
+  </div>
+  <Heading>{title}</Heading>
+  <p>{description}</p>
+  {tags.length > 0 && (
+    <ul class="tags" aria-label="Topics">
+      {tags.slice(0, 4).map((t) => <li>{t}</li>)}
+    </ul>
+  )}
+  <div class="card__foot">
+    <span class="card__link">Read the issue <Icon name="arrow" /></span>
+  </div>
+</a>

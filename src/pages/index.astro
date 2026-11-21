@@ -1,0 +1,224 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Icon from '../components/Icon.astro';
+import NewsCard from '../components/NewsCard.astro';
+import { SITE } from '../config';
+import { getSortedNews } from '../lib/format';
+import { graph, organization, person, website } from '../lib/schema';
+import { FEED_COUNT } from '../lib/sources';
+
+const posts = (await getSortedNews()).slice(0, 3);
+const latest = posts[0];
+
+const faqs = [
+  {
+    q: 'What is AI for Research?',
+    a: 'A free weekly digest of artificial intelligence news picked for people who do research: new models and tools, papers on AI for science, AI co-scientist systems, and EU rules and funding that affect research teams.',
+  },
+  {
+    q: 'When is a new issue published?',
+    a: 'Every Monday morning, Central European Time. Each issue covers the previous seven days.',
+  },
+  {
+    q: 'Who writes the weekly digest?',
+    a: `An AI model, Claude Haiku by Anthropic, selects and summarises the stories from a fixed list of public sources. The pipeline was designed by ${SITE.owner.name}, a senior researcher in energy modelling and AI. Issues are published without human review, and every story links to its original source.`,
+  },
+  {
+    q: 'Which sources does the digest use?',
+    a: `${FEED_COUNT} public feeds: AI labs such as OpenAI, Google DeepMind and Hugging Face, journals such as Nature, arXiv papers on AI for science, the European Commission, and specialist newsletters. The full list is on the AI transparency page.`,
+  },
+  {
+    q: 'Do I need an account or a subscription?',
+    a: 'No. Every issue is free to read and there is nothing to sign up for. If you use a feed reader, you can follow the RSS feed.',
+  },
+  {
+    q: 'Does this site use cookies or track me?',
+    a: 'No cookies are set. Visitor statistics, if enabled, come from a cookieless tool that does not identify individuals. Details are in the privacy policy.',
+  },
+  {
+    q: 'When will the proposal services be available?',
+    a: 'Call analysis, first drafts and reviews of existing drafts are being prepared. They cannot be bought yet. Use the contact form if you want to hear when they open.',
+  },
+];
+
+const schema = graph(website, organization, person, {
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+});
+---
+<BaseLayout title={SITE.name} description={SITE.description} schema={schema}>
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container hero__grid">
+      <div class="reveal">
+        <span class="badge badge--live">New issue every Monday</span>
+        <h1>The AI news that matters for <span class="accent">your research</span></h1>
+        <p class="hero__lead">
+          Each week we pick the AI releases, papers, tools and EU policy updates that are useful to scientists, and say in two lines what each one means for your work.
+        </p>
+        <div class="hero__actions">
+          <a class="btn btn--primary" href={latest ? `/news/${latest.id}/` : '/news/'}>
+            Read the latest issue <Icon name="arrow" />
+          </a>
+          <a class="btn btn--ghost" href="#sections">Explore the site</a>
+        </div>
+        <div class="hero__meta">
+          <span><Icon name="calendar" /> Published Mondays</span>
+          <span><Icon name="rss" /> {FEED_COUNT} curated sources</span>
+          <span><Icon name="lock" /> No cookies</span>
+        </div>
+      </div>
+
+      <div class="hero-visual" aria-hidden="true">
+        <div class="hero-visual__ring"></div>
+        <div class="hero-visual__ring hero-visual__ring--inner"></div>
+        <span class="node node--1"></span>
+        <span class="node node--2"></span>
+        <span class="node node--3"></span>
+        <span class="node node--4"></span>
+        <div class="hero-visual__core">
+          <svg viewBox="70 70 390 250" xmlns="http://www.w3.org/2000/svg">
+            <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path class="b-left" stroke="#fff" stroke-width="15.75" d="M108.12,87.88H87.88V300.12H108.12" />
+              <path class="b-right" stroke="#fff" stroke-width="15.75" d="M423.88,87.88H444.12V300.12H423.88" />
+              <path class="ai-stroke" stroke="#4F8FFF" stroke-width="30" d="M165.5,254L227,134L288.5,254M366.5,134V254" />
+            </g>
+          </svg>
+        </div>
+        <a class="chip chip--1" href="/news/" tabindex="-1"><span class="chip__dot"></span>Weekly AI News</a>
+        <a class="chip chip--2" href="/news/" tabindex="-1"><span class="chip__dot"></span>AI co-scientists</a>
+        <a class="chip chip--3" href="/news/" tabindex="-1"><span class="chip__dot"></span>EU policy &amp; funding</a>
+        <a class="chip chip--4" href="/services/" tabindex="-1"><span class="chip__dot"></span>Proposal support</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sections -->
+  <section class="section section--tight" id="sections">
+    <div class="container">
+      <div class="section-head reveal">
+        <p class="eyebrow">What's here</p>
+        <h2>Four reasons to come back on Monday</h2>
+        <p>The digest is live now. Proposal support will follow once the legal side is settled.</p>
+      </div>
+      <div class="cards reveal-stagger" data-reveal>
+        <a class="card" href="/news/">
+          <div class="card__icon"><Icon name="news" /></div>
+          <h3>Weekly AI News</h3>
+          <p>A ten-minute read: new models, research tools and papers, each with a link to the original source.</p>
+          <div class="card__foot"><span class="card__link">Read the issues <Icon name="arrow" /></span><span class="badge badge--live">Live</span></div>
+        </a>
+        <a class="card" href="/news/">
+          <div class="card__icon"><Icon name="flask" /></div>
+          <h3>AI tools for science</h3>
+          <p>Research agents and co-scientist systems, such as Google's AI co-scientist and Anthropic's Claude for Life Sciences, and the skills they add to a lab.</p>
+          <div class="card__foot"><span class="card__link">See the coverage <Icon name="arrow" /></span></div>
+        </a>
+        <a class="card" href="/news/">
+          <div class="card__icon"><Icon name="euro" /></div>
+          <h3>EU policy and funding</h3>
+          <p>AI Act deadlines, Horizon Europe calls on AI, and the rules on what you may do with research data.</p>
+          <div class="card__foot"><span class="card__link">Follow the updates <Icon name="arrow" /></span></div>
+        </a>
+        <a class="card" href="/services/">
+          <div class="card__icon"><Icon name="doc" /></div>
+          <h3>Proposal support</h3>
+          <p>Call analysis, a first draft of your proposal, or a review of the draft you already have.</p>
+          <div class="card__foot"><span class="card__link">Preview services <Icon name="arrow" /></span><span class="badge badge--muted">Coming soon</span></div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Latest issues -->
+  <section class="section section--alt">
+    <div class="container">
+      <div class="section-head reveal">
+        <p class="eyebrow">Latest issues</p>
+        <h2>This week in AI for research</h2>
+        <p>Six to ten stories per issue, chosen for people who write papers, run experiments or apply for grants.</p>
+      </div>
+      {posts.length > 0 ? (
+        <div class="news-grid reveal-stagger" data-reveal>
+          {posts.map((post) => <NewsCard post={post} />)}
+        </div>
+      ) : (
+        <div class="empty-state reveal">
+          <h3>The first issue arrives on Monday</h3>
+          <p>New issues are published every Monday morning. Add the RSS feed to your reader to get them as soon as they go live.</p>
+          <p><a class="btn btn--ghost" href="/rss.xml">Subscribe via RSS <Icon name="rss" /></a></p>
+        </div>
+      )}
+      {posts.length > 0 && (
+        <p class="reveal section-more"><a class="btn btn--ghost" href="/news/">All issues <Icon name="arrow" /></a></p>
+      )}
+    </div>
+  </section>
+
+  <!-- How it works -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head reveal">
+        <p class="eyebrow">How it's made</p>
+        <h2>An AI writes the digest, under fixed rules</h2>
+        <p>The digest runs on a small automated pipeline. Here is what it does each week.</p>
+      </div>
+      <ol class="steps reveal-stagger" data-reveal>
+        <li class="step">
+          <h3>Collect</h3>
+          <p>On Monday a script reads {FEED_COUNT} public feeds: AI labs, Nature, arXiv, the European Commission and specialist newsletters.</p>
+        </li>
+        <li class="step">
+          <h3>Select</h3>
+          <p>Claude Haiku, a small and inexpensive model from Anthropic, picks the stories most relevant to researchers and summarises each one.</p>
+        </li>
+        <li class="step">
+          <h3>Check</h3>
+          <p>The script drops any story whose link did not come from the feeds, so the model cannot invent a source.</p>
+        </li>
+        <li class="step">
+          <h3>Publish</h3>
+          <p>The issue goes live labelled as AI-generated, with every source linked so you can read the original.</p>
+        </li>
+      </ol>
+      <p class="reveal section-more"><a href="/ai-transparency/">Read the full AI transparency note</a></p>
+    </div>
+  </section>
+
+  <!-- Services teaser -->
+  <section class="section section--tight">
+    <div class="container">
+      <div class="cta-band reveal">
+        <span class="badge">Coming soon</span>
+        <h2>Help with your next research proposal</h2>
+        <p>Three services are in preparation: a preliminary analysis of a funding call, a first draft of your proposal, and a review of an existing draft. They are not on sale yet.</p>
+        <div class="hero__actions">
+          <a class="btn btn--primary" href="/services/">See the services <Icon name="arrow" /></a>
+          <a class="btn btn--ghost" href="/contact/?topic=services">Tell me when they open</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section">
+    <div class="container--narrow">
+      <div class="section-head section-head--center reveal">
+        <p class="eyebrow">FAQ</p>
+        <h2>Questions people ask</h2>
+      </div>
+      <div class="faq reveal-stagger" data-reveal>
+        {faqs.map((f) => (
+          <details>
+            <summary>{f.q}</summary>
+            <p>{f.a}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

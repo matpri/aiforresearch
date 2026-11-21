@@ -1,0 +1,56 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import { SITE } from '../config';
+import { breadcrumbs, graph } from '../lib/schema';
+
+const crumbs = [
+  { name: 'Home', path: '/' },
+  { name: 'Legal notice', path: '/legal-notice/' },
+];
+---
+<BaseLayout
+  title="Legal notice"
+  description="Who operates aiforresearch.eu, terms of use, liability for AI-generated content, and copyright."
+  schema={graph(breadcrumbs(crumbs))}
+>
+  <PageHero eyebrow="Legal" title="Legal notice" lead="Information on the operator of this website (Legislative Decree 70/2003 and Directive 2000/31/EC)." crumbs={crumbs} />
+
+  <section class="section section--tight">
+    <div class="container--narrow prose">
+      <h2>Operator</h2>
+      <p>
+        {SITE.owner.name}<br />
+        {SITE.owner.city}, {SITE.owner.country}<br />
+        Email: <a href={`mailto:${SITE.email}`}>{SITE.email}</a><br />
+        Website: <a href={SITE.url}>aiforresearch.eu</a>
+      </p>
+      <p>
+        The site is run by a private individual and currently sells no goods or services. The services described on the <a href="/services/">services page</a> are not offered for sale, and nothing on the site is a contractual offer.
+      </p>
+
+      <h2>AI-generated content</h2>
+      <p>
+        The weekly digest is generated automatically by an AI model and published without human review, as explained on the <a href="/ai-transparency/">AI transparency page</a>. Summaries may contain errors or omissions. They are provided for general information only and are not professional, legal or funding advice. Check the original source before relying on any detail. To report an error, write to <a href={`mailto:${SITE.email}`}>{SITE.email}</a>.
+      </p>
+
+      <h2>Liability</h2>
+      <p>
+        The content of this site is prepared with care, but no guarantee is given that it is accurate, complete or up to date. To the extent permitted by law, the operator is not liable for damages arising from the use of the information published here.
+      </p>
+
+      <h2>External links</h2>
+      <p>
+        The digest links to third-party websites. Their operators are solely responsible for their content. The linked pages were not checked for unlawful content at the time of publication beyond their presence in public news feeds. If you find a link to unlawful content, please let us know and it will be removed.
+      </p>
+
+      <h2>Copyright</h2>
+      <p>
+        The design, logo and original texts of this site belong to {SITE.owner.name}. You may quote short extracts of the digest with a link to the source page. Headlines and quoted titles of third-party articles belong to their publishers. Product names such as Claude, Gemini or ChatGPT are trademarks of their respective owners.
+      </p>
+
+      <h2>Applicable law</h2>
+      <p>Italian law applies, without prejudice to mandatory consumer protection rules of your country of residence.</p>
+    </div>
+  </section>
+</BaseLayout>

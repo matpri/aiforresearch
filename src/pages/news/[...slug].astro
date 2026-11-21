@@ -1,0 +1,126 @@
+---
+import { render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Icon from '../../components/Icon.astro';
+import { SITE } from '../../config';
+import { formatDate, getSortedNews, readingTime } from '../../lib/format';
+import { abs, breadcrumbs, graph, organization, organizationId } from '../../lib/schema';
+
+export async function getStaticPaths() {
+  const posts = await getSortedNews();
+  return posts.map((post, i) => ({
+    params: { slug: post.id },
+    props: { post, newer: posts[i - 1], older: posts[i + 1] },
+  }));
+}
+
+const { post, newer, older } = Astro.props;
+const { Content, headings } = await render(post);
+const { title, description, pubDate, issue, tags, sources, aiGenerated, model } = post.data;
+const url = abs(`/news/${post.id}/`);
+const minutes = readingTime(post.body ?? '');
+const stories = headings.filter((h) => h.depth === 3);
+const MODEL_NAMES: Record<string, string> = { 'claude-haiku-5-5': 'Claude Haiku 5.5' };
+const modelName = (model && MODEL_NAMES[model]) || model || 'Claude Haiku';
+
+const crumbs = [
+  { name: 'Home', path: '/' },
+  { name: 'Weekly AI News', path: '/news/' },
+  { name: `Issue #${issue}`, path: `/news/${post.id}/` },
+];
+
+const schema = graph(
+  organization,
+  {
+    '@type': 'NewsArticle',
+    '@id': `${url}#article`,
+    headline: title,
+    description,
+    url,
+    mainEntityOfPage: url,
+    datePublished: pubDate.toISOString(),
+    dateModified: pubDate.toISOString(),
+    inLanguage: 'en',
+    image: [abs('/og-default.png')],
+    keywords: tags.join(', '),
+    articleSection: 'Weekly AI News',
+    isAccessibleForFree: true,
+    author: { '@id': organizationId },
+    publisher: { '@id': organizationId },
+    ...(aiGenerated
+      ? { creativeWorkStatus: 'Published', abstract: `AI-generated digest written by ${modelName} from ${sources} linked public sources.` }
+      : {}),
+  },
+  breadcrumbs(crumbs),
+);
+---
+<BaseLayout
+  title={title}
+  description={description}
+  type="article"
+  publishedTime={pubDate}
+  modifiedTime={pubDate}
+  tags={tags}
+  schema={schema}
+>
+  <article>
+    <header class="page-hero hero">
+      <div class="container--narrow">
+        <nav class="breadcrumbs" aria-label="Breadcrumb">
+          <ol>
+            <li><a href="/">Home</a></li>
+            <li><a href="/news/">Weekly AI News</a></li>
+            <li aria-current="page">Issue #{issue}</li>
+          </ol>
+        </nav>
+        <div class="reveal">
+          <p class="eyebrow">Issue #{issue}</p>
+          <h1>{title}</h1>
+          <p>{description}</p>
+          <div class="article-meta">
+            <span><Icon name="calendar" class="inline-icon" /> <time datetime={pubDate.toISOString()}>{formatDate(pubDate)}</time></span>
+            <span><Icon name="clock" class="inline-icon" /> {minutes} min read</span>
+            <span><Icon name="news" class="inline-icon" /> {sources} sources</span>
+          </div>
+          {tags.length > 0 && (
+            <ul class="tags article-tags" aria-label="Topics">{tags.map((t) => <li>{t}</li>)}</ul>
+          )}
+        </div>
+      </div>
+    </header>
+
+    <div class="container--narrow">
+      {aiGenerated && (
+        <aside class="notice" aria-label="AI-generated content">
+          <Icon name="sparkle" />
+          <div>
+            <p><strong>Written by AI.</strong> {modelName} selected and summarised these stories from public sources. Nobody reviewed this issue before publication, so check the linked source before you rely on a detail.</p>
+            <p><a href="/ai-transparency/">How the digest is made</a> · <a href={`mailto:${SITE.email}?subject=${encodeURIComponent(`Correction: issue #${issue}`)}`}>Report an error</a></p>
+          </div>
+        </aside>
+      )}
+
+      {stories.length > 0 && (
+        <nav class="toc" aria-label="Stories in this issue">
+          <p class="toc__title">In this issue</p>
+          <ol>
+            {stories.map((h) => <li><a href={`#${h.slug}`}>{h.text.replace(/^\d+\.\s*/, '')}</a></li>)}
+          </ol>
+        </nav>
+      )}
+
+      <div class="prose">
+        <Content />
+      </div>
+
+      <nav class="article-nav" aria-label="More issues">
+        {older && (
+          <a href={`/news/${older.id}/`} class="prev"><small>Previous issue</small>{older.data.title}</a>
+        )}
+        {newer && (
+          <a href={`/news/${newer.id}/`} class="next"><small>Next issue</small>{newer.data.title}</a>
+        )}
+      </nav>
+    </div>
+  </article>
+</BaseLayout>

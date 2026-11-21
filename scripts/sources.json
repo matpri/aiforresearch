@@ -1,0 +1,129 @@
+[
+  {
+    "name": "OpenAI",
+    "url": "https://openai.com/news/rss.xml",
+    "category": "AI labs"
+  },
+  {
+    "name": "Google DeepMind",
+    "url": "https://deepmind.google/blog/rss.xml",
+    "category": "AI labs"
+  },
+  {
+    "name": "Google Research",
+    "url": "https://research.google/blog/rss/",
+    "category": "AI labs"
+  },
+  {
+    "name": "Google AI blog",
+    "url": "https://blog.google/technology/ai/rss/",
+    "category": "AI labs"
+  },
+  {
+    "name": "Microsoft Research",
+    "url": "https://www.microsoft.com/en-us/research/feed/",
+    "category": "AI labs"
+  },
+  {
+    "name": "Hugging Face",
+    "url": "https://huggingface.co/blog/feed.xml",
+    "category": "AI labs"
+  },
+  {
+    "name": "NVIDIA Technical Blog",
+    "url": "https://developer.nvidia.com/blog/feed",
+    "category": "AI labs"
+  },
+  {
+    "name": "Anthropic (news)",
+    "url": "https://news.google.com/rss/search?q=site:anthropic.com&hl=en-GB&gl=GB&ceid=GB:en",
+    "category": "AI labs"
+  },
+  {
+    "name": "Nature Machine Intelligence",
+    "url": "https://www.nature.com/natmachintell.rss",
+    "category": "Journals"
+  },
+  {
+    "name": "Nature: machine learning",
+    "url": "https://www.nature.com/subjects/machine-learning.rss",
+    "category": "Journals"
+  },
+  {
+    "name": "Nature news",
+    "url": "https://www.nature.com/nature.rss",
+    "category": "Journals",
+    "keywords": true
+  },
+  {
+    "name": "Science news",
+    "url": "https://www.science.org/rss/news_current.xml",
+    "category": "Journals",
+    "keywords": true
+  },
+  {
+    "name": "arXiv: AI for scientific discovery",
+    "url": "https://export.arxiv.org/api/query?search_query=abs:%22scientific%20discovery%22%20AND%20(cat:cs.AI%20OR%20cat:cs.LG%20OR%20cat:cs.CL)&sortBy=submittedDate&sortOrder=descending&max_results=25",
+    "category": "Papers"
+  },
+  {
+    "name": "arXiv: research agents and co-scientists",
+    "url": "https://export.arxiv.org/api/query?search_query=(abs:%22co-scientist%22%20OR%20abs:%22research%20agent%22%20OR%20abs:%22AI%20scientist%22%20OR%20abs:%22literature%20review%22)%20AND%20cat:cs.*&sortBy=submittedDate&sortOrder=descending&max_results=25",
+    "category": "Papers"
+  },
+  {
+    "name": "arXiv: digital libraries",
+    "url": "https://rss.arxiv.org/rss/cs.DL",
+    "category": "Papers"
+  },
+  {
+    "name": "European Commission: digital strategy",
+    "url": "https://digital-strategy.ec.europa.eu/en/rss.xml",
+    "category": "EU policy"
+  },
+  {
+    "name": "EU AI Act Newsletter",
+    "url": "https://artificialintelligenceact.substack.com/feed",
+    "category": "EU policy"
+  },
+  {
+    "name": "Science|Business (AI coverage)",
+    "url": "https://news.google.com/rss/search?q=site:sciencebusiness.net%20AI%20when:7d&hl=en-GB&gl=GB&ceid=GB:en",
+    "category": "EU policy"
+  },
+  {
+    "name": "MIT Technology Review: AI",
+    "url": "https://www.technologyreview.com/topic/artificial-intelligence/feed",
+    "category": "Media"
+  },
+  {
+    "name": "Import AI",
+    "url": "https://importai.substack.com/feed",
+    "category": "Newsletters"
+  },
+  {
+    "name": "Simon Willison",
+    "url": "https://simonwillison.net/atom/everything/",
+    "category": "Newsletters"
+  },
+  {
+    "name": "Ahead of AI (Sebastian Raschka)",
+    "url": "https://magazine.sebastianraschka.com/feed",
+    "category": "Newsletters"
+  },
+  {
+    "name": "AI co-scientists in the news",
+    "url": "https://news.google.com/rss/search?q=%22AI%20co-scientist%22%20OR%20%22Claude%20for%20Life%20Sciences%22%20OR%20%22AI%20for%20science%22%20when:7d&hl=en-GB&gl=GB&ceid=GB:en",
+    "category": "Topic searches"
+  },
+  {
+    "name": "AI research tools in the news",
+    "url": "https://news.google.com/rss/search?q=(%22AI%20research%20assistant%22%20OR%20%22deep%20research%22%20OR%20%22agent%20skills%22%20OR%20%22AI%20for%20researchers%22)%20when:7d&hl=en-GB&gl=GB&ceid=GB:en",
+    "category": "Topic searches"
+  },
+  {
+    "name": "Horizon Europe and AI in the news",
+    "url": "https://news.google.com/rss/search?q=(%22Horizon%20Europe%22%20AND%20AI)%20OR%20%22Resource%20for%20AI%20Science%20in%20Europe%22%20OR%20%22European%20strategy%20for%20AI%20in%20science%22%20when:7d&hl=en-GB&gl=GB&ceid=GB:en",
+    "category": "Topic searches"
+  }
+]
