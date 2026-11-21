@@ -30,13 +30,18 @@
     "category": "AI labs"
   },
   {
+    "name": "Ai2 (Allen Institute for AI)",
+    "url": "https://allenai.org/rss.xml",
+    "category": "AI labs"
+  },
+  {
     "name": "NVIDIA Technical Blog",
     "url": "https://developer.nvidia.com/blog/feed",
     "category": "AI labs"
   },
   {
-    "name": "Anthropic (news)",
-    "url": "https://news.google.com/rss/search?q=site:anthropic.com&hl=en-GB&gl=GB&ceid=GB:en",
+    "name": "Anthropic",
+    "url": "https://www.bing.com/news/search?format=rss&mkt=en-GB&setlang=en-GB&q=site%3Aanthropic.com",
     "category": "AI labs"
   },
   {
@@ -88,8 +93,14 @@
   },
   {
     "name": "Science|Business (AI coverage)",
-    "url": "https://news.google.com/rss/search?q=site:sciencebusiness.net%20AI%20when:7d&hl=en-GB&gl=GB&ceid=GB:en",
+    "url": "https://www.bing.com/news/search?format=rss&mkt=en-GB&setlang=en-GB&q=site%3Asciencebusiness.net%20AI",
     "category": "EU policy"
+  },
+  {
+    "name": "European Commission: research and innovation",
+    "url": "https://www.bing.com/news/search?format=rss&mkt=en-GB&setlang=en-GB&q=site%3Aresearch-and-innovation.ec.europa.eu",
+    "category": "EU policy",
+    "keywords": true
   },
   {
     "name": "MIT Technology Review: AI",
@@ -112,18 +123,30 @@
     "category": "Newsletters"
   },
   {
-    "name": "AI co-scientists in the news",
-    "url": "https://news.google.com/rss/search?q=%22AI%20co-scientist%22%20OR%20%22Claude%20for%20Life%20Sciences%22%20OR%20%22AI%20for%20science%22%20when:7d&hl=en-GB&gl=GB&ceid=GB:en",
+    "name": "AI and scientific discovery in the news",
+    "url": "https://www.bing.com/news/search?format=rss&mkt=en-GB&setlang=en-GB&q=AI%20scientific%20discovery",
     "category": "Topic searches"
   },
   {
     "name": "AI research tools in the news",
-    "url": "https://news.google.com/rss/search?q=(%22AI%20research%20assistant%22%20OR%20%22deep%20research%22%20OR%20%22agent%20skills%22%20OR%20%22AI%20for%20researchers%22)%20when:7d&hl=en-GB&gl=GB&ceid=GB:en",
+    "url": "https://www.bing.com/news/search?format=rss&mkt=en-GB&setlang=en-GB&q=AI%20scientists%20research%20tool",
     "category": "Topic searches"
   },
   {
-    "name": "Horizon Europe and AI in the news",
-    "url": "https://news.google.com/rss/search?q=(%22Horizon%20Europe%22%20AND%20AI)%20OR%20%22Resource%20for%20AI%20Science%20in%20Europe%22%20OR%20%22European%20strategy%20for%20AI%20in%20science%22%20when:7d&hl=en-GB&gl=GB&ceid=GB:en",
+    "name": "Retraction Watch",
+    "url": "https://retractionwatch.com/feed/",
+    "category": "Research integrity",
+    "keywords": true
+  },
+  {
+    "name": "LSE Impact Blog",
+    "url": "https://blogs.lse.ac.uk/impactofsocialsciences/feed/",
+    "category": "Research integrity",
+    "keywords": true
+  },
+  {
+    "name": "AI and peer review in the news",
+    "url": "https://www.bing.com/news/search?format=rss&mkt=en-GB&setlang=en-GB&q=AI%20peer%20review",
     "category": "Topic searches"
   }
 ]

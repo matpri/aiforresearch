@@ -24,6 +24,7 @@ import re
 import sys
 import time
 import unicodedata
+import urllib.parse
 import urllib.request
 from pathlib import Path
 from typing import Literal
@@ -158,6 +159,21 @@ def fetch_feed(url: str) -> feedparser.FeedParserDict:
     return feedparser.parse(data)
 
 
+def unwrap_link(link: str) -> str:
+    """Bing News RSS wraps article links in a click tracker; the real URL is in the `url` parameter."""
+    parsed = urllib.parse.urlparse(link)
+    if parsed.netloc.endswith("bing.com") and parsed.path.endswith("apiclick.aspx"):
+        target = urllib.parse.parse_qs(parsed.query).get("url", [""])[0]
+        if target.startswith(("http://", "https://")):
+            return target
+    return link
+
+
+def publisher_from_url(link: str) -> str:
+    host = urllib.parse.urlparse(link).netloc.lower().removeprefix("www.")
+    return host or "Unknown source"
+
+
 def entry_time(entry) -> float | None:
     t = entry.get("published_parsed") or entry.get("updated_parsed")
     return calendar.timegm(t) if t else None
@@ -191,7 +207,7 @@ def collect_candidates(now: float) -> list[dict]:
         kept = []
         for entry in feed.entries:
             ts = entry_time(entry)
-            link = (entry.get("link") or "").strip()
+            link = unwrap_link((entry.get("link") or "").strip())
             title = clean_text(entry.get("title", ""), 220)
             if not ts or ts < cutoff or ts > now + 86400 or not link.startswith("http") or not title:
                 continue
@@ -202,12 +218,9 @@ def collect_candidates(now: float) -> list[dict]:
             if link in used or link in seen_urls or norm in seen_titles:
                 continue
             publisher = src["name"]
-            # Google News items carry the real publisher in <source>.
-            if "news.google.com" in src["url"]:
-                publisher = (entry.get("source") or {}).get("title") or publisher
-                title = re.sub(rf"\s+-\s+{re.escape(publisher)}$", "", title)
-                if summary.startswith(title[:40]):
-                    summary = ""
+            # Bing News searches mix many publishers: name the real one.
+            if "bing.com/news" in src["url"]:
+                publisher = clean_text(entry.get("news_source", ""), 80) or publisher_from_url(link)
             if len(re.sub(r"[^A-Za-z]", "", title)) < 12:
                 continue
             kept.append({

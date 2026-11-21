@@ -21,7 +21,7 @@ const schema = graph(
 );
 const displayUrl = (u: string) => {
   const host = new URL(u).hostname.replace(/^www\./, '');
-  return host === 'news.google.com' ? 'Google News topic search' : host;
+  return host === 'bing.com' ? 'Bing News search' : host;
 };
 ---
 <BaseLayout

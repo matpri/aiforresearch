@@ -1,15 +1,15 @@
 ---
-title: "Riemann claim, GPT-6.2 Astra pricing and new Horizon Europe calls"
-description: "AI research roundup: a claimed Riemann hypothesis proof with Claude, GPT-6.2 Astra API prices, METR's capability chart and new Horizon Europe AI calls."
+title: "Riemann claim, GPT-6.2 Astra pricing and a Horizon Europe AI call"
+description: "AI research roundup: a claimed Riemann hypothesis proof with Claude, GPT-6.2 Astra API prices, METR's capability chart and a €111M Horizon Europe AI call."
 pubDate: 2026-11-21T16:13:35Z
 issue: 1
 tags: ["AI for Science", "Horizon Europe", "Research Agents", "Research Integrity"]
-sources: 15
+sources: 14
 aiGenerated: true
 model: "claude-haiku-5-5"
 ---
 
-This week's issue opens with a claimed proof of the Riemann hypothesis that involved Claude, and the reaction from the mathematics community. It also covers the new GPT-6.2 models in the API, METR's updated capability chart, benchmarks for AI scientists and drug candidate selection, and two Horizon Europe funding calls.
+This week's issue opens with a claimed proof of the Riemann hypothesis that involved Claude, and the reaction from the mathematics community. It also covers the new GPT-6.2 models in the API, METR's updated capability chart, benchmarks for AI scientists and drug candidate selection, and a €111 million Horizon Europe call for AI.
 
 ## Top stories
 
@@ -47,7 +47,7 @@ Source: [MIT Technology Review: AI: The most misunderstood graph in AI just got 
 
 *AI for science* · Science news · 2026-11-19
 
-Science news reporter observed 936 agents exchanging thousands of messages. Each agent published end-to-end research on its own preprint server. The report asks whether the output was any good.
+A Science reporter observed 936 agents exchanging thousands of messages. Each agent published end-to-end research on its own preprint server. The report asks whether the output was any good.
 
 **Why it matters for researchers:** If you read or review preprints, expect more papers written by agents on dedicated servers. Check the methods and data before you cite a result from one.
 
@@ -73,17 +73,7 @@ TwinLab-Bench evaluates whether AI agents can design their own experiments and r
 
 Source: [arXiv: research agents and co-scientists: TwinLab-Bench: Evaluating AI Scientists in Agentic Twins of Real Labs](https://arxiv.org/abs/2611.26248v1)
 
-### 7. EU opens €272 million Horizon Europe digital research call
-
-*EU policy & funding* · CASRAI · 2026-11-17
-
-The EU has opened a €272 million Horizon Europe call for digital research, as reported by CASRAI.
-
-**Why it matters for researchers:** If you plan a Horizon Europe bid on digital research, read the call text for the deadline, topics and eligibility rules this week. Start looking for partners early.
-
-Source: [CASRAI: EU opens €272 million Horizon Europe digital research call](https://news.google.com/rss/articles/CBMihwFBVV95cUxNWWtwWXd1aC1yeGJuZ1pPN1NNci1Hd2Vrc2NQQTAzbVp6RkY3bXQ0Z1pweG1SN2dURVdFNXNqN01zVHBaWGhIM3U5SnkwdFJOcFAteHJwVXQ4N1dpQmNYMHlNTG1LdnB6ZzRJaVVoRG5TS3pIX0VzRGIteEpZbVV5dDNLM2ZvazA?oc=5)
-
-### 8. Horizon Europe opens a €111 million call for AI
+### 7. Horizon Europe opens a €111 million call for AI
 
 *EU policy & funding* · Science|Business · 2026-11-16
 
@@ -91,18 +81,20 @@ Science|Business highlights Horizon Europe's latest funding call for AI, worth �
 
 **Why it matters for researchers:** If you write grant applications on AI, compare the call's scope with your project and check its eligibility rules before the deadline.
 
-Source: [Science|Business: Funding Radar: Horizon Europe’s latest €111M funding call for AI](https://news.google.com/rss/articles/CBMiuwFBVV95cUxOWkh2U0ZTM0NsazdmeVItUEF5R2JXS0VkeHFZLV9IdFZxNEpfdmhZSmNpQzRsbWE2bDJZU25LV25WZ3l5S2xibUgzMzhsdU9RR29kQ1FMbW5xN1lFcFVFU2ZveElib09TUG55VjFDVU41Vl83M1V3R0pyUnYzSFRFbzVBS3JnbVllQktRdDZKN0t3N3RWWHB6R1d5ZE9BdGFUSl9GN29GY2VSNTlyUlM0M09CTTdmbG5GUEpz?oc=5)
+Source: [Science|Business: Funding Radar: Horizon Europe’s latest €111M funding call for AI](https://sciencebusiness.net/news/r-d-funding/horizon-europe/funding-radar-horizon-europes-latest-eu111m-funding-call-ai)
 
 ## Quick hits
 
 - Kalinin et al. argue in Nature Machine Intelligence that self-driving labs need bottom-up optimisation to turn hypotheses into executable workflows, alongside LLM-generated hypotheses. ([Nature Machine Intelligence](https://www.nature.com/articles/s42256-026-01339-0))
 - Nature reports that AI systems are ditching hallucinated references and other bad habits. ([Nature: machine learning](https://www.nature.com/articles/d41586-026-03753-1))
-- Elsevier has acquired Clear Skies to strengthen its research integrity capabilities. ([Science|Business](https://news.google.com/rss/articles/CBMiuAFBVV95cUxORlFwa01QbklUM09wVTI1Wms4SmFvMmFjb1FKU0dIOXljQlBpZ2U3QWFYMXI1d01QWW1hX1ZkTUZkR3Z6YTNnY1BraHZISmhkZjJWcmZoYVNEQmZmRFZDWE5EX3U0SUhzTnRuR3RfMWk3Y1ZqXzZQV1otb0hUR2tpRWExSjRkdmlYV2VucnRUZlBmVUxHMWEwd01pSUdYOVNNaDFxNFlaWUNEak91cUJiT2ZEd3drZGN6?oc=5))
+- Elsevier has acquired Clear Skies to strengthen its research integrity capabilities. ([Science|Business](https://sciencebusiness.net/network-updates/elsevier-enhances-research-integrity-capabilities-clear-skies-acquisition))
 - Nature Machine Intelligence argues that when AI-assisted criticism scales, peer review needs an obligation threshold. ([Nature Machine Intelligence](https://www.nature.com/articles/s42256-026-01349-y))
-- Engadget explains how to use Gemini Notebook to turn research into an interactive site. ([Engadget](https://news.google.com/rss/articles/CBMiqwFBVV95cUxPSFYyczZuUzRZQ1RPdWRtc0w1V3RKcnJYZHlnMzUtYXpSckxNTzEyaWVNVXRJSk5ocDVkS0QxUkhOREZfbFFpVkJiOFJsZWdyNGJNU3p5Wjc3TTd4a1ZBRmhTdGYwWHgtUFRTbTBXU0g1emVPcEFDN2p6RWkxR25EaUJRU3V0RDBJWHhqNkhiaVdLeXlrU0RIYXlvLUZvclhwQmdwQ21FdTJEbk0?oc=5))
+- Gemini Notebook can now turn your research notes into an interactive website. ([Android Authority](https://www.androidauthority.com/gemini-notebook-research-interactive-sites-3735782/))
 - KnowMe Paper Radar ranks new papers into personalised reading priorities using topical relevance, recency, author histories and collaboration paths. ([arXiv: research agents and co-scientists](https://arxiv.org/abs/2611.23702v1))
-- Anthropic says Claude Fable 5.2 solves two open problems in the physics of black holes. ([Anthropic](https://news.google.com/rss/articles/CBMibEFVX3lxTFBZUGhIZlEzczZ3OTFxcjBiRFJLUDhrZjhGM1hKRHdQWnYzV05NQUh0Y19Nb2d6WHlQNWR6UkZmWEp0YlE4endwZXJTdVNwUmN3LXQxUU5MaTFaQldqZkZNZjFHZWNiZFN6LV9UdQ?oc=5))
+- Anthropic says Claude Fable 5.2 solves two open problems in the physics of black holes. ([Anthropic](https://www.anthropic.com/research/claude-black-hole-physics))
 
 ## This week's takeaway
 
 Before you cite the Riemann claim or rely on a new model's output, wait for referee reports and check a sample of your results by hand. If your group pays for API access, compare the new GPT-6.2 prices with your current model this week.
+
+*Edited 21 November 2026: links now point to the original articles, and one story without a verifiable source was removed.*
